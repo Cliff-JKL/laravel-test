@@ -3,34 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\MessageRepository;
+use App\Repositories\UserRepository;
 
 class MessageController extends Controller
 {
     /**
-     * Экземпляр TaskRepository.
+     * MessageRepository.
      *
      * @var MessageRepository
      */
     protected $messages;
 
     /**
-     * Создание нового экземпляра контроллера.
+     * UserRepository
+     *
+     * @var UserRepository
+     */
+    protected $users;
+
+    /**
+     * Controller constructor
      *
      * @param  MessageRepository  $messages
+     * @param UserRepository $users
      * @return void
      */
-    public function __construct(MessageRepository $messages)
+    public function __construct(MessageRepository $messages, UserRepository $users)
     {
         $this->middleware('auth');
         $this->messages = $messages;
+        $this->users = $users;
     }
 
     /**
-     * Показать список всех задач пользователя.
+     Show message list
      *
      * @param  Request  $request
      * @return Response
@@ -39,11 +50,13 @@ class MessageController extends Controller
     {
         return view('messages.index', [
             'messages' => $this->messages->forUser($request->user()),
+            'friends' => $this->users->friendsForUser($request->user()),
+            'allMessages' => $this->messages->allMessagesForUser($request->user()),
         ]);
     }
 
     /**
-     * Создание новой задачи.
+     * Create message
      *
      * @param  Request  $request
      * @return Response
@@ -56,13 +69,14 @@ class MessageController extends Controller
 
         $request->user()->messages()->create([
             'text' => $request->text,
+            'destination_id' => $request->destination_id,
         ]);
 
         return redirect('/messages');
     }
 
     /**
-     * Уничтожить заданную задачу.
+     * Destroy message
      *
      * @param  Request  $request
      * @param  Message  $message

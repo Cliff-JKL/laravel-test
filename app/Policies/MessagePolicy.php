@@ -6,12 +6,12 @@ use App\User;
 use App\Message;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class MessagePolicyPolicy
+class MessagePolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Определяем, может ли данный пользователь удалить данную задачу.
+     * Delete message policy
      *
      * @param  User  $user
      * @param  Message  $message

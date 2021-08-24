@@ -39,8 +39,8 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                    MessageSender
                 </a>
             </div>
 
@@ -48,6 +48,10 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/messages') }}">Messages</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
