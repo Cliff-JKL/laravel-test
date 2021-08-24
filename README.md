@@ -12,17 +12,21 @@ This app is built with:
 1. Download and start docker containers:
 
 ```bash
-$ docker-compose up -d
+docker-compose up -d
 ```
 
-2. Then install dependencies and update database:
+2. install composer dependencies:
 
 ```bash
-$ docker exec -it messageSender-php-fpm composer install
+docker exec -it messageSender-php-fpm composer install
+```
 
-$ docker exec -it messageSender-php-fpm php artisan migrate
+3. Then use migrations to update database:
+
+```bash
+docker exec -it messageSender-php-fpm php artisan migrate
 ```
 
 ## Running the app
 
-Open in browser: (<a href="localhost" target="_blank">localhost</a>).
+Open in browser: (<a href="http://localhost" target="_blank">localhost</a>).
